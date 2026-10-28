@@ -1,1 +1,35 @@
-<p>login works!</p>
+<div class="container">
+  <h1>Mini Task Manager</h1>
+  <h2>Login</h2>
+
+  <form (ngSubmit)="login()">
+    <label>Username</label>
+    <input
+      type="text"
+      name="username"
+      [(ngModel)]="username"
+      required
+    />
+
+    <label>Password</label>
+    <input
+      type="password"
+      name="password"
+      [(ngModel)]="password"
+      required
+    />
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Logging in...' : 'Login' }}
+    </button>
+  </form>
+
+  <p class="error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+
+  <p>
+    Don't have an account?
+    <a routerLink="/register">Register</a>
+  </p>
+</div>
