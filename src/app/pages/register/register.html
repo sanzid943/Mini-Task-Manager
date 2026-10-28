@@ -1,1 +1,40 @@
-<p>register works!</p>
+<div class="container">
+  <h1>Mini Task Manager</h1>
+  <h2>Create Account</h2>
+
+  <form (ngSubmit)="register()">
+    <label>Username</label>
+    <input
+      type="text"
+      name="username"
+      [(ngModel)]="username"
+      required
+    />
+
+    <label>Password</label>
+    <input
+      type="password"
+      name="password"
+      [(ngModel)]="password"
+      minlength="6"
+      required
+    />
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Registering...' : 'Register' }}
+    </button>
+  </form>
+
+  <p class="error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+
+  <p class="success" *ngIf="successMessage">
+    {{ successMessage }}
+  </p>
+
+  <p>
+    Already registered?
+    <a routerLink="/login">Login</a>
+  </p>
+</div>
