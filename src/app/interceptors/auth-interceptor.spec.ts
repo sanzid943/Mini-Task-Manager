@@ -1,16 +1,22 @@
-import { TestBed } from '@angular/core/testing';
+
 import { HttpInterceptorFn } from '@angular/common/http';
-import { authInterceptor } from './auth-interceptor';
+import { inject } from '@angular/core';
 
-describe('authInterceptor', () => {
-  const interceptor: HttpInterceptorFn = (req, next) =>
-    TestBed.runInInjectionContext(() => authInterceptor(req, next));
+import { AuthService } from '../services/auth';
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-  });
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);
+  const token = authService.getToken();
 
-  it('should be created', () => {
-    expect(interceptor).toBeTruthy();
-  });
-});
+  if (token) {
+    const authReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return next(authReq);
+  }
+
+  return next(req);
+};
